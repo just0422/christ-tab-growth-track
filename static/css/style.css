@@ -1,0 +1,16 @@
+.gt-form-radio-option input[type="radio"] {
+  display: none;
+}
+
+.gt-form-radio-option label {
+  display: inline-block;
+  background-color: #ddd;
+  padding: 4px 11px;
+  font-family: Arial;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.gt-form-radio-option input[type="radio"]:checked+label {
+  background-color: #bbb;
+}
