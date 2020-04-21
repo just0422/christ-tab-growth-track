@@ -12,10 +12,8 @@ def disc():
 def disc_submit():
     type_values = {}
     
-    print(request.form)
     for types in disc_type_details:
         type_values[types] = 0
-        print(types)
         for index in range(len(disc_type_details[types]['questions'])):
             type_values[types] += int(request.form.get(types + '-' + str(index)))
 

@@ -21,3 +21,8 @@
   color: white;
   background-color: black;
 }
+
+.gt-complete-result-header {
+  width: 40px;
+  line-height: 1.6
+}

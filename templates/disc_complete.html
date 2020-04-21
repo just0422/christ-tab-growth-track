@@ -18,22 +18,26 @@
     {% endif %}
 
     <!-- Primary Category -->
-    <h1>{{maxType1[0]}}</h1>
+    <h1 class="float-left text-center gt-complete-result-header">{{maxType1[0]}}</h1>
     <div>{{type_details[maxType1]['description']}}</div>
     <!-- Combo Categories -->
-    <h2>{{maxType1[0]}}/{{maxType2[0]}}</h2>
-    <div>{{type_details[maxType1][maxType2]['description']}}</div>
-    <div><i>{{type_details[maxType1][maxType2]['verses']}}</i></div>
+    <div class="ml-5 mt-3 gt-complete-secondary-category">
+      <h2 class="float-left text-center gt-complete-result-header">{{maxType1[0]}}/{{maxType2[0]}}</h2>
+      <div>{{type_details[maxType1][maxType2]['description']}}</div>
+      <div><i>{{type_details[maxType1][maxType2]['verses']}}</i></div>
+    </div>
       
     {% if doubleMax|length > 0 %}
       <hr/>
       <!-- Primary Category -->
-      <h1>{{maxType2[0]}}</h1>
+      <h1 class="float-left text-center gt-complete-result-header">{{maxType2[0]}}</h1>
       <div>{{type_details[maxType2]['description']}}</div>
       <!-- Combo Categories -->
-      <h2>{{maxType2[0]}}/{{maxType1[0]}}</h2>
-      <div>{{type_details[maxType2][maxType1]['description']}}</div>
-      <div><i>{{type_details[maxType2][maxType1]['verses']}}</i></div>
+      <div class="gt-complete-secondary-category">
+        <h2 class="float-left text-center gt-complete-result-header">{{maxType2[0]}}/{{maxType1[0]}}</h2>
+        <div>{{type_details[maxType2][maxType1]['description']}}</div>
+        <div><i>{{type_details[maxType2][maxType1]['verses']}}</i></div>
+      </div>
     {% endif %}
 
     {% endblock %}
