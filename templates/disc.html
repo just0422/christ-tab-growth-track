@@ -18,11 +18,11 @@
       <label for="emailAddress">Email address</label>
       <input type="email" class="form-control" id="emailAddress" name="emailAddress">
       
-      {% for type, questions in type_questions.items() %}
+      {% for type in type_details %}
         <hr />
-        {% for index in range(questions|length) %}
+        {% for index in range(type_details[type]['questions']|length) %}
           <div class="text-center my-3 gt-form-question"> 
-            <strong class="mb-1">{{questions[index]}}</strong>
+            <strong class="mb-1">{{type_details[type]['questions'][index]}}</strong>
             
             {% for choice in range(choices|length) %}
               <div class="form-check form-check-inline gt-form-radio-option">
