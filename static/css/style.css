@@ -5,6 +5,10 @@ html {
   background-color: black;
 }
 
+body {
+  font-family: SaintsChurchLight;
+}
+
 .gt-navbar {
   background-color: black;
 }
@@ -15,7 +19,10 @@ html {
 
 .gt-navbar-link,
 .gt-navbar-text,
-.gt-page-header {
+.gt-page-header,
+.gt-submit-button,
+.gt-assessment-result,
+.gt-card-title {
   font-family: SaintsChurchHeavy;
 }
 
@@ -30,16 +37,14 @@ html {
 
 .gt-content {
   margin-top: 4rem;
-  padding-top: 1rem;
+  padding-top: 1.8rem;
+  padding-bottom: 1rem;
+  min-height: 80%;
 }
 
 .gt-complete-result-header {
-  width: 40px;
+  width: 60px;
   line-height: 1.6
-}
-
-.gt-form {
-  font-family: SaintsChurchLight;
 }
 
 .gt-form-control {
@@ -80,10 +85,31 @@ html {
   border-radius: 0;
   background-color: black;
   font-size: 25px;
-  font-family: SaintsChurchHeavy;
 }
 
 .gt-submit-button:hover {
   color black;
   background-color: white;
+}
+
+.gt-assessment-result {
+  font-size: 40px;
+}
+
+.gt-type-descriptions {
+  border-radius: 0;
+  border: 2px solid black;
+}
+
+.gt-type-descriptions:hover {
+  background-color: #c0c0c0;
+}
+
+.gt-type-descriptions:not(.collapsed) {
+  background-color: black;
+  color: white;
+}
+
+.gt-descriptions-content {
+  border: 2px solid black;
 }
