@@ -1,3 +1,57 @@
+@font-face { font-family: SaintsChurchHeavy; src: url("../fonts/HelveticaNeueLTStd-Hv.otf"); }
+@font-face { font-family: SaintsChurchLight; src: url("../fonts/HelveticaNeueLTStd-Lt.otf"); }
+
+html {
+  background-color: black;
+}
+
+.gt-navbar {
+  background-color: black;
+}
+
+.gt-navbar-brand {
+  font-size: 30px;
+}
+
+.gt-navbar-link,
+.gt-navbar-text,
+.gt-page-header {
+  font-family: SaintsChurchHeavy;
+}
+
+.gt-navbar-link,
+.gt-navbar-text {
+  color: white;
+}
+
+.gt-navbar-link:hover {
+  color: #a0a0a0;
+}
+
+.gt-content {
+  margin-top: 4rem;
+  padding-top: 1rem;
+}
+
+.gt-complete-result-header {
+  width: 40px;
+  line-height: 1.6
+}
+
+.gt-form {
+  font-family: SaintsChurchLight;
+}
+
+.gt-form-control {
+  border-radius: 0;
+  border: 1px solid black;
+  color: black;
+}
+
+.gt-form-question {
+  font-size: 25px;
+}
+
 .gt-form-radio-option input[type="radio"] {
   display: none;
 }
@@ -22,7 +76,14 @@
   background-color: black;
 }
 
-.gt-complete-result-header {
-  width: 40px;
-  line-height: 1.6
+.gt-submit-button {
+  border-radius: 0;
+  background-color: black;
+  font-size: 25px;
+  font-family: SaintsChurchHeavy;
+}
+
+.gt-submit-button:hover {
+  color black;
+  background-color: white;
 }

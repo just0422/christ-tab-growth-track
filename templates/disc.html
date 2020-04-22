@@ -1,45 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Saints Church</title>
-  </head>
-  <body class="container">
-    {% extends "template.html" %}
-    {% block content %}
-    
-    <h1>DISC Assessment</h1>
-    
-    <form action="/disc/submit" method="POST">
-      <label for="firstName">First name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName">
-      <label for="lastname">Last Name</label>
-      <input type="text" class="form-control" id="lastName" name="lastName">
-      <label for="emailAddress">Email address</label>
-      <input type="email" class="form-control" id="emailAddress" name="emailAddress">
-      
-      {% for type in type_details %}
-        <hr />
-        {% for index in range(type_details[type]['questions']|length) %}
-          <div class="text-center my-3 gt-form-question"> 
-            <strong class="mb-1">{{type_details[type]['questions'][index]}}</strong>
-            
-            {% for choice in range(choices|length) %}
-              <div class="form-check form-check-inline gt-form-radio-option">
-                <input class="form-check-input" type="radio" name="{{type}}-{{index}}" id="{{type}}-{{index}}-checkbox-{{choice}}" value="{{choice + 1}}">
-                <label class="form-check-label" for="{{type}}-{{index}}-checkbox-{{choice}}">
-                  {{choices[choice]}}
-                </label>
-              </div>
-            {% endfor %}
+{% extends "template.html" %}
+{% block content %}
+
+<h1 class="text-center mt-4 gt-page-header">DISC Assessment</h1>
+
+<form action="/disc/submit" method="POST" class="gt-form">
+  <div class="w-50 mx-auto">
+    <label for="firstName" class="mb-0">First name</label>
+    <input type="text" class="form-control gt-form-control" id="firstName" name="firstName">
+  </div>
+  <div class="w-50 mx-auto mt-3">
+    <label for="lastname" class="mb-0">Last Name</label>
+    <input type="text" class="form-control gt-form-control" id="lastName" name="lastName">
+  </div>
+  <div class="w-50 mx-auto mt-3">
+    <label for="emailAddress" class="mb-0">Email address</label>
+    <input type="email" class="form-control gt-form-control" id="emailAddress" name="emailAddress">
+  </div>
+  
+  {% for type in type_details %}
+    <hr />
+    {% for index in range(type_details[type]['questions']|length) %}
+      <div class="text-center my-3"> 
+        <div class="gt-form-question">{{type_details[type]['questions'][index]}}</div>
+        
+        {% for choice in range(choices|length) %}
+          <div class="form-check form-check-inline gt-form-radio-option">
+            <input class="form-check-input" type="radio" name="{{type}}-{{index}}" id="{{type}}-{{index}}-checkbox-{{choice}}" value="{{choice + 1}}">
+            <label class="form-check-label" for="{{type}}-{{index}}-checkbox-{{choice}}">
+              {{choices[choice]}}
+            </label>
           </div>
         {% endfor %}
-      {% endfor %}
+      </div>
+    {% endfor %}
+  {% endfor %}
 
-      <hr />
-      <button type="submit" class="btn btn-dark">Submit</button>
-    </form>
+  <hr />
+  <div class="row mb-5 justify-content-center pb-4">
+    <div class="col-md-6 col-xs-9">
+      <button type="submit" class="btn btn-dark w-100 gt-submit-button">SUBMIT</button>
+    </div>
+  </div>
+</form>
 
-    {% endblock %}
-  </body>
-</html>
+{% endblock %}

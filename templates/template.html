@@ -14,20 +14,21 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
-  <body class="container">
-     <header>
-         <h1 class="logo">Saints Church Growth Track</h1>
-         <strong><nav>
-           <ul class="menu">
-             <li><a href="https://saintschurch.com">Saints Church</a></li>
-             <li><a href="{{ url_for('disc') }}">DISC Assessment</a></li>
-             <li><a href="{{ url_for('sga') }}">Spiritual Gifts Assessment</a></li>
-           </ul>
-         </nav></strong>
+  <body class="container px-0">
+    <header>
+      <nav class="container navbar navbar-expand-sm gt-navbar fixed-top">
+        <a class="navbar-brand gt-navbar-brand gt-navbar-link pull-sm-left" href="https://saintschurch.com">SAINTS CHURCH</a>
+        <span class="navbar-text gt-navbar-text mx-auto">Growth Track</span>
+        <div class="navbar-nav pull-sm-right">
+          <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('disc') }}">DISC</a>
+          <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('sga') }}">Spiritual Gifts</a>
+        </div>
+      </nav>
      </header>
      
-     {% block content %}
-     {% endblock %}
-     
+     <div class="gt-content">
+       {% block content %}
+       {% endblock %}
+     </div>
   </body>
 </html>
