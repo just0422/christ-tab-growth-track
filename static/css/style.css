@@ -22,6 +22,8 @@ body {
 .gt-page-header,
 .gt-submit-button,
 .gt-assessment-result,
+.gt-result-side-icon,
+.gt-result-title,
 .gt-card-title {
   font-family: SaintsChurchHeavy;
 }
@@ -81,7 +83,8 @@ body {
   background-color: black;
 }
 
-.gt-submit-button {
+.gt-submit-button,
+.gt-learn-more-button {
   border-radius: 0;
   background-color: black;
   font-size: 25px;
@@ -112,4 +115,8 @@ body {
 
 .gt-descriptions-content {
   border: 2px solid black;
+}
+
+.gt-result-side-icon {
+  font-size: 80px;
 }

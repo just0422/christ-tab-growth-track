@@ -53,7 +53,7 @@ def sga_submit():
     max_types = []
     remaining = list(sga_type_details.keys())
     counter = 9
-    while len(max_types) < 5 and counter > 1:
+    while len(max_types) < 3 and counter > 1:
         types = [key for key,val in sga_type_details.items() if type_values[key] == counter]
         max_types += types
         counter -= 1
@@ -333,7 +333,7 @@ sga_type_details = {
         ]
     },
     'Prophecy': {
-        'descriptions': 'The gift of prophecy is the divine strength or ability to boldly speak and bring clarity to scriptural and doctrinal truth, in some cases foretelling God’s plan.',
+        'description': 'The gift of prophecy is the divine strength or ability to boldly speak and bring clarity to scriptural and doctrinal truth, in some cases foretelling God’s plan.',
         'verses': 'Acts 2:37-40, 7:51-53, 26:24-29; 1 Corinthians 14:1-4; 1 Thessalonians 1:5',
         'questions': [
             'I get frustrated when people knowingly sin.',
@@ -342,7 +342,7 @@ sga_type_details = {
         ]
     },
     'Service': {
-        'descriptions': 'The gift of serving is the divine strength or ability to do small or great tasks in working for the overall good of the body of Christ.',
+        'description': 'The gift of serving is the divine strength or ability to do small or great tasks in working for the overall good of the body of Christ.',
         'verses': 'Acts 6:1-7; Romans 12:7; Galatians 6:10; 1 Timothy 1:16-18; Titus 3:14',
         'questions': [
             'I enjoy serving behind the scenes.',
@@ -351,7 +351,7 @@ sga_type_details = {
         ]
     },
     'Teaching': {
-        'descriptions': 'The gift of teaching is the divine strength or ability to study and learn from the Scriptures primarily to bring understanding and growth to other Christians.',
+        'description': 'The gift of teaching is the divine strength or ability to study and learn from the Scriptures primarily to bring understanding and growth to other Christians.',
         'verses': 'Acts 18:24-28, 20:20-21; 1 Corinthians 12:28; Ephesians 4:11-14',
         'questions': [
             'I like creating outlines of the Bible.',
@@ -360,7 +360,7 @@ sga_type_details = {
         ]
     },
     'Tongues': {
-        'descriptions': 'The gift of tongues is the divine strength or ability to pray in a heavenly language to encourage your spirit and to commune with God. The gift of tongues is often accompanied by interpretation and should be used appropriately.',
+        'description': 'The gift of tongues is the divine strength or ability to pray in a heavenly language to encourage your spirit and to commune with God. The gift of tongues is often accompanied by interpretation and should be used appropriately.',
         'verses': 'Acts 2:1-13; 1 Corinthians 12:10, 14:1-14',
         'questions': [
             'God has used me to interpret what someone speaking in tongues is saying.',
@@ -369,7 +369,7 @@ sga_type_details = {
         ]
     },
     'Wisdom': {
-        'descriptions': 'The gift of wisdom is the divine strength or ability to apply the truths of Scripture in a practical way, producing a fruitful outcome and the character of Jesus Christ.',
+        'description': 'The gift of wisdom is the divine strength or ability to apply the truths of Scripture in a practical way, producing a fruitful outcome and the character of Jesus Christ.',
         'verses': 'Acts 6:3,10; 1 Corinthians 2:6-13, 12:8',
         'questions': [
             'I enjoy the book of Proverbs more than any other book in the Bible.',
