@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/disc")
 def disc():
-    choices = ["never", "rarely", "sometimes", "often", "always"]
+    choices = ["Never", "Rarely", "Sometimes", "Often", "Always"]
 
     return render_template("disc.html", type_details=disc_type_details, choices=choices)
     

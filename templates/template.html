@@ -20,17 +20,78 @@
     <header>
       <nav class="container navbar navbar-expand-sm gt-navbar fixed-top">
         <a class="navbar-brand gt-navbar-brand gt-navbar-link pull-sm-left" href="https://saintschurch.com">SAINTS CHURCH</a>
-        <span class="navbar-text gt-navbar-text mx-auto">Growth Track</span>
-        <div class="navbar-nav pull-sm-right">
-          <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('disc') }}">DISC</a>
-          <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('sga') }}">Spiritual Gifts</a>
+        <div>
+          <button class="navbar-toggler gt-navbar-button" type="button" data-toggle="collapse" data-target="#gtNavbarContent" aria-controls="gtNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon gt-navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="gtNavbarContent">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('disc') }}">DISC</a>
+            <a class="nav-item nav-link gt-navbar-link" href="{{ url_for('sga') }}">Spiritual Gifts</a>
+          </div>
         </div>
       </nav>
-     </header>
-     
-     <div class="gt-content">
-       {% block content %}
-       {% endblock %}
-     </div>
+    </header>
+
+    <script>
+      window.onscroll = function() {adjustProgress()};
+
+      function adjustProgress() {
+        let windowScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        let scrolled = (windowScroll / height) * 100;
+        document.getElementById("gt-progress-bar").style.width = scrolled + "%";
+      }
+    </script>
+
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          let forms = document.getElementsByClassName('gt-form');
+          // Loop over them and prevent submission
+          let validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              let validCheckboxGroup = true;
+              let questions = undefined;
+
+              if ($(window).width() > 768) {
+                questions = $(".gt-form-question-row");
+              } else {
+                questions = $(".gt-form-buttons-question-group");
+              }
+              
+              questions.each(function( index ) {
+                if($(this).find("input:checked").length == 0) {
+                  $(this).find("input:checked").attr('required', true);
+                  $(this).find(".invalid-feedback").addClass('d-block');
+                  validCheckboxGroup = false;
+                } else {
+                  $(this).find("input:checked").attr('required', false);
+                  $(this).find(".invalid-feedback").removeClass('d-block');
+                  validCheckboxGroup = true;
+                }
+              });
+
+              if (validCheckboxGroup == false || form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+    
+    <div class="gt-content">
+      <h1 class="text-center">Growth Track Step 2</h1>
+      {% block content %}
+      {% endblock %}
+    </div>
   </body>
 </html>
