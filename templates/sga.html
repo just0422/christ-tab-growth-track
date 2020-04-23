@@ -4,17 +4,23 @@
 <h1 class="text-center mt-4 gt-page-header">Spiritual Gift Assessment</h1>
 
 <form action="/sga/submit" method="POST">
-  <div class="w-50 mx-auto">
-    <label for="firstName" class="mb-0">First name</label>
-    <input type="text" class="form-control gt-form-control" id="firstName" name="firstName">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="firstName" class="mb-0">First name</label>
+      <input type="text" class="form-control gt-form-control" id="firstName" name="firstName">
+    </div>
   </div>
-  <div class="w-50 mx-auto mt-3">
-    <label for="lastname" class="mb-0">Last Name</label>
-    <input type="text" class="form-control gt-form-control" id="lastName" name="lastName">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="lastname" class="mb-0">Last Name</label>
+      <input type="text" class="form-control gt-form-control" id="lastName" name="lastName">
+    </div>
   </div>
-  <div class="w-50 mx-auto mt-3">
-    <label for="emailAddress" class="mb-0">Email address</label>
-    <input type="email" class="form-control gt-form-control" id="emailAddress" name="emailAddress">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="emailAddress" class="mb-0">Email address</label>
+      <input type="email" class="form-control gt-form-control" id="emailAddress" name="emailAddress">
+    </div>
   </div>
 
   {% set count = 1 %}
@@ -37,8 +43,8 @@
 
   <hr />
 
-  <div class="row mb-5 justify-content-center pb-4">
-    <div class="col-md-6 col-xs-9">
+  <div class="row mt-md-3 mb-md-5 my-4">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
       <button type="submit" class="btn btn-dark w-100 gt-submit-button">SUBMIT</button>
     </div>
   </div>

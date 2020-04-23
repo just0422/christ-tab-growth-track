@@ -5,40 +5,82 @@
 <h1 class="text-center mt-4 gt-page-header">DISC Assessment</h1>
 
 <form action="/disc/submit" method="POST" class="gt-form">
-  <div class="w-50 mx-auto">
-    <label for="firstName" class="mb-0">First name</label>
-    <input type="text" class="form-control gt-form-control" id="firstName" name="firstName">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="firstName" class="mb-0">First name</label>
+      <input type="text" class="form-control gt-form-control" id="firstName" name="firstName">
+    </div>
   </div>
-  <div class="w-50 mx-auto mt-3">
-    <label for="lastname" class="mb-0">Last Name</label>
-    <input type="text" class="form-control gt-form-control" id="lastName" name="lastName">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="lastname" class="mb-0">Last Name</label>
+      <input type="text" class="form-control gt-form-control" id="lastName" name="lastName">
+    </div>
   </div>
-  <div class="w-50 mx-auto mt-3">
-    <label for="emailAddress" class="mb-0">Email address</label>
-    <input type="email" class="form-control gt-form-control" id="emailAddress" name="emailAddress">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
+      <label for="emailAddress" class="mb-0">Email address</label>
+      <input type="email" class="form-control gt-form-control" id="emailAddress" name="emailAddress">
+    </div>
   </div>
-  
-  {% for type in type_details %}
-    <hr />
-    {% for index in range(type_details[type]['questions']|length) %}
-      <div class="text-center my-3"> 
-        <div class="gt-form-question">{{type_details[type]['questions'][index]}}</div>
-        
-        {% for choice in range(choices|length) %}
-          <div class="form-check form-check-inline gt-form-radio-option">
-            <input class="form-check-input" type="radio" name="{{type}}-{{index}}" id="{{type}}-{{index}}-checkbox-{{choice}}" value="{{choice + 1}}">
-            <label class="form-check-label" for="{{type}}-{{index}}-checkbox-{{choice}}">
-              {{choices[choice]}}
-            </label>
-          </div>
-        {% endfor %}
+
+  <div class="gt-form-table">
+    {% for type in type_details %}
+      <hr />
+      <div class="px-5">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              {% for choice in choices %}
+                <th scope="col" class="text-center" width="10%">{{choice}}</th>  
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for index in range(type_details[type]['questions']|length) %}
+              <tr>
+                <th class="gt-form-question">{{type_details[type]['questions'][index]}}</th>
+                {% for choice in range(choices|length) %}
+                  <td class="text-center gt-form-radio-option">
+                    <input class="form-check-input" type="radio" name="{{type}}-{{index}}" id="{{type}}-{{index}}-table-checkbox-{{choice}}" value="{{choice + 1}}">
+                    <label class="form-check-label gt-form-check-label" for="{{type}}-{{index}}-table-checkbox-{{choice}}"></label>
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     {% endfor %}
-  {% endfor %}
+  </div>
+
+  <div class="gt-form-buttons">
+    {% for type in type_details %}
+      <hr />
+      {% for index in range(type_details[type]['questions']|length) %}
+        <div class="text-center my-3"> 
+          <div class="gt-form-question">{{type_details[type]['questions'][index]}}</div>
+          
+          {% for choice in range(choices|length) %}
+            <div class="form-check form-check-inline gt-form-radio-option">
+              <input class="form-check-input" type="radio" name="{{type}}-{{index}}" id="{{type}}-{{index}}-buttons-checkbox-{{choice}}" value="{{choice + 1}}">
+              <div class="d-block gt-form-button-checkbox-label-group">
+                <label class="form-check-label gt-form-check-label" for="{{type}}-{{index}}-buttons-checkbox-{{choice}}"></label>
+                <div class="gt-form-check-secondary-label">
+                  {{choices[choice]}}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
 
   <hr />
-  <div class="row mb-5 justify-content-center pb-4">
-    <div class="col-md-6 col-xs-9">
+  <div class="row mt-md-3 mb-md-5 my-4">
+    <div class="col-md-6 offset-md-3 col-8 offset-2">
       <button type="submit" class="btn btn-dark w-100 gt-submit-button">SUBMIT</button>
     </div>
   </div>

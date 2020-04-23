@@ -1,6 +1,18 @@
 @font-face { font-family: SaintsChurchHeavy; src: url("../fonts/HelveticaNeueLTStd-Hv.otf"); }
 @font-face { font-family: SaintsChurchLight; src: url("../fonts/HelveticaNeueLTStd-Lt.otf"); }
 
+@media (max-width: 767.99px) {
+  .gt-form-table {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .gt-form-buttons {
+    display:none;
+  }
+}
+
 html {
   background-color: black;
 }
@@ -41,7 +53,7 @@ body {
   margin-top: 4rem;
   padding-top: 1.8rem;
   padding-bottom: 1rem;
-  min-height: 80%;
+  min-height: 85vh;
 }
 
 .gt-complete-result-header {
@@ -55,30 +67,55 @@ body {
   color: black;
 }
 
-.gt-form-question {
-  font-size: 25px;
+@media (max-width: 767.99px) {
+  .gt-form-question {
+    font-size: 25px;
+  }
+}
+@media (min-width: 768px) {
+  .gt-form-question {
+    vertical-align:middle !important;
+  }
 }
 
 .gt-form-radio-option input[type="radio"] {
   display: none;
 }
 
-.gt-form-radio-option label {
+.gt-form-radio-option .gt-form-check-label {
   display: inline-block;
   border: 2px solid black;
   background-color: white;
-  padding: 4px 0px;
   font-family: Arial;
   font-size: 16px;
   cursor: pointer;
-  width: 125px;
 }
 
-.gt-form-radio-option input[type="radio"]:hover+label {
+@media (max-width: 767.99px) {
+  .gt-form-radio-option label {
+    width: 50px;
+    height: 50px;
+  }
+
+  .gt-form-button-checkbox-label-group {
+    width: 75px;
+  }
+}
+
+@media (min-width: 768px) {
+  .gt-form-radio-option label {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.gt-form-radio-option input[type="radio"]:hover+label,
+.gt-form-radio-option input[type="radio"]:hover+.gt-form-button-checkbox-label-group label {
   background-color: lightgrey;
 }
 
-.gt-form-radio-option input[type="radio"]:checked+label {
+.gt-form-radio-option input[type="radio"]:checked+label,
+.gt-form-radio-option input[type="radio"]:checked+.gt-form-button-checkbox-label-group label {
   color: white;
   background-color: black;
 }
@@ -91,7 +128,7 @@ body {
 }
 
 .gt-submit-button:hover {
-  color black;
+  color: black;
   background-color: white;
 }
 
@@ -120,3 +157,4 @@ body {
 .gt-result-side-icon {
   font-size: 80px;
 }
+
