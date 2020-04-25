@@ -3,10 +3,10 @@
 
 <h2 class="text-center gt-page-header">DISC Assessment Results</h2>
 <div class="row">
-  {% for key, val in type_values.items() %}
+  {% for key, result in disc_results.items() %}
     <div class="col-sm-3 text-center">
       <div>{{key}}</div>
-      <div class="gt-assessment-result">{{val}}</div>
+      <div class="gt-assessment-result">{{result['value']}}</div>
     </div>
   {% endfor %}
 </div>
@@ -46,7 +46,7 @@
 <h5 class="text-center">Learn about the other DISC types</h5>
 <div id="gt-descriptions">
   <div class="row mx-2">
-    {% for key, val in type_values.items() %}
+    {% for key in type_details %}
       <div class="col-sm-3 text-center">
         <button class="btn mx-auto py-3 w-75 gt-type-descriptions collapsed" type="button" data-toggle="collapse" data-target="#{{key}}-descriptions" aria-expanded="false" aria-controls="#{{key}}-descriptions">
           <h1 class="gt-card-title">{{key[0]}}</h1>
