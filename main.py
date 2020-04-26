@@ -12,6 +12,9 @@ app = Flask(__name__)
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='pco')
+channel.exchange_declare(exchange='pco_message', exchange_type='direct')
+channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_disc')
+channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_sga')
 
 pco_thread = threading.Thread(target=pco.start_rabbit_consumer, daemon=True)
 pco_thread.start()
@@ -21,7 +24,10 @@ pco_thread.start()
 def disc():
     choices = ["Never", "Rarely", "Sometimes", "Often", "Always"]
 
-    return render_template("disc.html", type_details=constants.disc_type_details, choices=choices)
+    return render_template("disc.html", 
+        disc_properties=constants.disc_properties, 
+        choices=choices
+    )
     
 @app.route("/disc/submit", methods = ["POST"])
 def disc_submit():
@@ -35,7 +41,8 @@ def disc_submit():
         max_category_value = disc_results[max_categories[0]]['value'] - 1
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
-    channel.basic_publish(exchange='', routing_key='pco', body=json.dumps(disc_results))
+    message = build_message(disc_results)
+    channel.basic_publish(exchange='pco_message', routing_key='pco_disc', body=json.dumps(message))
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -47,18 +54,32 @@ def disc_submit():
 @app.route("/sga")
 def sga():
     choices = ["Almost Never", "Sometimes", "Almost Always"]
-    return render_template("sga.html", sga_properties=constants.sga_properties, choices=choices)
+    return render_template("sga.html", 
+        sga_properties=constants.sga_properties, 
+        choices=choices
+    )
     
 @app.route("/sga/submit", methods = ["POST"])
 def sga_submit():
     sga_results = assessment_results(constants.sga_properties)
     max_categories = filter_max_categories(constants.sga_properties, sga_results, 3, 9)
+
+    message = build_message(sga_results)
+    channel.basic_publish(exchange='pco_message', routing_key='pco_sga', body=json.dumps(message))
    
     return render_template("sga_complete.html", 
         sga_properties=constants.sga_properties,
         sga_results=sga_results,
         max_categories=max_categories
     )
+
+def build_message(results):
+    return {
+        'first_name': request.form.get('firstName'),
+        'last_name': request.form.get('lastName'),
+        'email': request.form.get('emailAddress'),
+        'results': results
+    }
 
 def assessment_results(properties):
     results = {}
