@@ -95,6 +95,7 @@ disc_properties = {
 
 sga_properties = {
     'Administration': {
+        'id': '371677',
         'description': 'The gift of administration is the divine strength or ability to organize multiple tasks and groups of people to accomplish these tasks.',
         'verses': 'Luke 14:28-30; Acts 6:1-7; 1 Corinthians 12:28',
         'questions': [
@@ -104,6 +105,7 @@ sga_properties = {
         ]
     },
     'Apostleship': {
+        'id': '371678',
         'description': 'The gift of apostleship is the divine strength or ability to pioneer new churches and ministries through planting, overseeing, and training.',
         'verses': 'Acts 15:22-35; 1 Corinthians 12:28; 2 Corinthians 12:12; Galatians 2:7-10; Ephesians 4:11-14',
         'questions': [
@@ -113,6 +115,7 @@ sga_properties = {
         ]
     },
     'Craftsmanship': {
+        'id': '371679',
         'description': 'The gift of craftsmanship is the divine strength or ability to plan, build and work with your hands in construction environments to accomplish multiple ministry applications.',
         'verses': 'Exodus 30:22, 31:3-11; 2 Chronicles 34:9-13; Acts 18:2-3',
         'questions': [
@@ -122,6 +125,7 @@ sga_properties = {
         ]
     },
     'Discernment': {
+        'id': '371680',
         'description': 'The gift of discernment is the divine strength or ability to spiritually identify falsehood and to distinguish between right and wrong motives and situations.',
         'verses': 'Matthew 16:21-23; Acts 5:1-11, 16:16-18; 1 Corinthians 12:10; 1 John 4:1-6',
         'questions': [
@@ -131,6 +135,7 @@ sga_properties = {
         ]
     },
     'Evangelism': {
+        'id': '371681',
         'description': 'The gift of evangelism is the divine strength or ability to help non-Christians take the necessary steps to becoming Christ followers.',
         'verses': 'Acts 8:5-6, 8:26-40, 14:21, 21:8; Ephesians 4:11-14',
         'questions': [
@@ -140,6 +145,7 @@ sga_properties = {
         ]
     },
     'Exhortation': {
+        'id': '371682',
         'description': 'The gift of exhortation is the divine strength or ability to encourage others through the written or spoken word and Biblical truth.',
         'verses': 'Acts 14:22; Romans 12:8; 1 Timothy 4:13; Hebrews 10:24-25',
         'questions': [
@@ -149,6 +155,7 @@ sga_properties = {
         ]
     },
     'Faith': {
+        'id': '371683',
         'description': 'The gift of faith is the divine strength or ability to believe in God for unseen supernatural results in every arena of life.',
         'verses': 'Acts 11:22-24; Romans 4:18-21; 1 Corinthians 12:9; Hebrews 11',
         'questions': [
@@ -158,6 +165,7 @@ sga_properties = {
         ]
     },
     'Giving': {
+        'id': '371684',
         'description': 'The gift of giving is the divine strength or ability to produce wealth and to give by tithes and offerings for the purpose of advancing the Kingdom of God on earth.',
         'verses': 'Mark 12:41-44; Romans 12:8; 2 Corinthians 8:1-7, 9:2-7',
         'questions': [
@@ -167,6 +175,7 @@ sga_properties = {
         ]
     },
     'Healing': {
+        'id': '371685',
         'description': 'The gift of healing is the divine strength or ability to act as an intermediary in faith, prayer, and by the laying-on of hands for the healing of physical and mental illnesses.',
         'verses': 'Acts 3:1-10, 9:32-35, 28:7-10; 1 Corinthians 12:9, 28',
         'questions': [
@@ -176,6 +185,7 @@ sga_properties = {
         ]
     },
     'Helps': {
+        'id': '371686',
         'description': 'The gift of helps is the divine strength or ability to work in a supportive role for the accomplishment of tasks in Christian ministry.',
         'verses': 'Mark 15:40-41; Acts 9:36; Romans 16:1-2; 1 Corinthians 12:28',
         'questions': [
@@ -185,6 +195,7 @@ sga_properties = {
         ]
     },
     'Hospitality': {
+        'id': '371687',
         'description': 'The gift of hospitality is the divine strength or ability to create warm, welcoming environments for others in places such as your home, office, or church.',
         'verses': 'Acts 16:14-15; Romans 12:13, 16:23; Hebrews 13:1-2; 1 Peter 4:9',
         'questions': [
@@ -194,6 +205,7 @@ sga_properties = {
         ]
     },
     'Intercession': {
+        'id': '371688',
         'description': 'The gift of intercession is the divine strength or ability to stand in the gap in prayer for someone, something, or someplace believing for profound results.',
         'verses': 'Hebrews 7:25; Colossians 1:9-12, 4:12-13; James 5:14-16',
         'questions': [
@@ -203,6 +215,7 @@ sga_properties = {
         ]
     },
     'Knowledge': {
+        'id': '371689',
         'description': 'The gift of knowledge is the divine strength or ability to understand and to bring clarity to situations and circumstances often accompanied by a word from God.',
         'verses': 'Acts 5:1-11; 1 Corinthians 12:8; Colossians 2:2-3',
         'questions': [
@@ -212,6 +225,7 @@ sga_properties = {
         ]
     },
     'Leadership': {
+        'id': '371690',
         'description': 'The gift of leadership is the divine strength or ability to influence people at their level while directing and focusing them on the big picture, vision, or idea.',
         'verses': 'Romans 12:8; 1 Timothy 3:1-13, 5:17; Hebrews 13:17',
         'questions': [
@@ -221,6 +235,7 @@ sga_properties = {
         ]
     },
     'Mercy': {
+        'id': '371691',
         'description': 'The gift of mercy is the divine strength or ability to feel empathy and to care for those who are hurting in any way.',
         'verses': 'Matthew 9:35-36; Mark 9:41; Romans 12:8; 1 Thessalonians 5:14',
         'questions': [
@@ -230,6 +245,7 @@ sga_properties = {
         ]
     },
     'Miracles': {
+        'id': '371692',
         'description': 'The gift of miracles is the divine strength or ability to alter the natural outcomes of life in a supernatural way through prayer, faith, and divine direction.',
         'verses': 'Acts 9:36-42, 19:11-12, 20:7-12; Romans 15:18-19; 1 Corinthians 12:10, 28',
         'questions': [
@@ -239,6 +255,7 @@ sga_properties = {
         ]
     },
     'Missionary': {
+        'id': '371693',
         'description': 'The missionary gift is the divine strength or ability to reach others outside of your culture and nationality, while in most cases living in that culture or nation.',
         'verses': 'Acts 8:4, 13:2-3, 22:21; Romans 10:15',
         'questions': [
@@ -248,6 +265,7 @@ sga_properties = {
         ]
     },
     'Music': {
+        'id': '371694',
         'description': 'The gift of music/worship is the divine strength or ability to sing, dance, or play an instrument primarily for the purpose of helping others worship God.',
         'verses': 'Deuteronomy 31:22; 1 Samuel 16:16; 1 Chronicles 16:41-42; 2 Chronicles 5:12-13, 34:12; Psalm 150',
         'questions': [
@@ -257,6 +275,7 @@ sga_properties = {
         ]
     },
     'Pastor': {
+        'id': '371695',
         'description': 'The gift of pastor/shepherd is the divine strength or ability to care for the personal needs of others by nurturing and mending life issues.',
         'verses': 'John 10:1-18; Ephesians 4:11-14; 1 Timothy 3:1-7; 1 Peter 5:1-3',
         'questions': [
@@ -266,6 +285,7 @@ sga_properties = {
         ]
     },
     'Prophecy': {
+        'id': '371696',
         'description': 'The gift of prophecy is the divine strength or ability to boldly speak and bring clarity to scriptural and doctrinal truth, in some cases foretelling God’s plan.',
         'verses': 'Acts 2:37-40, 7:51-53, 26:24-29; 1 Corinthians 14:1-4; 1 Thessalonians 1:5',
         'questions': [
@@ -275,6 +295,7 @@ sga_properties = {
         ]
     },
     'Service': {
+        'id': '371697',
         'description': 'The gift of serving is the divine strength or ability to do small or great tasks in working for the overall good of the body of Christ.',
         'verses': 'Acts 6:1-7; Romans 12:7; Galatians 6:10; 1 Timothy 1:16-18; Titus 3:14',
         'questions': [
@@ -284,6 +305,7 @@ sga_properties = {
         ]
     },
     'Teaching': {
+        'id': '371698',
         'description': 'The gift of teaching is the divine strength or ability to study and learn from the Scriptures primarily to bring understanding and growth to other Christians.',
         'verses': 'Acts 18:24-28, 20:20-21; 1 Corinthians 12:28; Ephesians 4:11-14',
         'questions': [
@@ -293,6 +315,7 @@ sga_properties = {
         ]
     },
     'Tongues': {
+        'id': '371699',
         'description': 'The gift of tongues is the divine strength or ability to pray in a heavenly language to encourage your spirit and to commune with God. The gift of tongues is often accompanied by interpretation and should be used appropriately.',
         'verses': 'Acts 2:1-13; 1 Corinthians 12:10, 14:1-14',
         'questions': [
@@ -302,6 +325,7 @@ sga_properties = {
         ]
     },
     'Wisdom': {
+        'id': '371700',
         'description': 'The gift of wisdom is the divine strength or ability to apply the truths of Scripture in a practical way, producing a fruitful outcome and the character of Jesus Christ.',
         'verses': 'Acts 6:3,10; 1 Corinthians 2:6-13, 12:8',
         'questions': [

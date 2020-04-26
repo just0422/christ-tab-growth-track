@@ -3,71 +3,62 @@
 
 <h2 class="text-center gt-page-header">DISC Assessment Results</h2>
 <div class="row">
-  {% for key, result in disc_results.items() %}
+  {% for property, result in disc_results.items() %}
     <div class="col-sm-3 text-center">
-      <div>{{key}}</div>
+      <div>{{property}}</div>
       <div class="gt-assessment-result">{{result['value']}}</div>
     </div>
   {% endfor %}
 </div>
 
 <hr />
-{% if doubleMax|length > 0 %}
-  <div>Looks like you tied for two categories. Take a read through these and see what you identify with</div>
+{% if max_categories|length > 1 or max_sub_categories|length > 1 %}
+  <div>Looks like you tied for multiple categories. Feel free to retake the test and answer as honestly as possible or take a read through these and see what you identify with</div>
 {% endif %}
 
-<div class="m-4 gt-assessment-result-explanation">
-  <h3 class="text-center gt-page-header">{{maxType1}}</h3>
-  <!-- Primary Category -->
-  <h1 class="float-left text-center gt-complete-result-header">{{maxType1[0]}}</h1>
-  <div>{{type_details[maxType1]['description']}}</div>
-  <!-- Combo Categories -->
-  <div class="ml-5 mt-3 gt-complete-secondary-category">
-    <h3 class="float-left text-center mb-0 gt-complete-result-header">{{maxType1[0]}}/{{maxType2[0]}}</h3>
-    <div>{{type_details[maxType1][maxType2]['description']}}</div>
-    <div><i>{{type_details[maxType1][maxType2]['verses']}}</i></div>
-  </div>
-    
-  {% if doubleMax|length > 0 %}
-    <hr/>
-    <h3 class="text-center gt-page-header">{{maxType2}}</h3>
+{% for max_category in max_categories %}
+  <div class="m-4 gt-assessment-result-explanation">
+    <h3 class="text-center gt-page-header">{{max_category}}</h3>
     <!-- Primary Category -->
-    <h1 class="float-left text-center gt-complete-result-header">{{maxType2[0]}}</h1>
-    <div>{{type_details[maxType2]['description']}}</div>
+    <h1 class="float-left text-center gt-complete-result-header">{{max_category[0]}}</h1>
+    <div>{{disc_properties[max_category]['description']}}</div>
     <!-- Combo Categories -->
-    <div class="gt-complete-secondary-category">
-      <h3 class="float-left text-center mb-0 gt-complete-result-header">{{maxType2[0]}}/{{maxType1[0]}}</h3>
-      <div>{{type_details[maxType2][maxType1]['description']}}</div>
-      <div><i>{{type_details[maxType2][maxType1]['verses']}}</i></div>
-    </div>
-  {% endif %}
-</div>
+    {% for max_sub_category in max_sub_categories if max_sub_category != max_category %}
+      <div class="ml-5 mt-3 gt-complete-secondary-category">
+        <h3 class="float-left text-center mb-0 gt-complete-result-header">{{max_category[0]}}/{{max_sub_category[0]}}</h3>
+        <div>{{disc_properties[max_category][max_sub_category]['description']}}</div>
+        <div><i>{{disc_properties[max_category][max_sub_category]['verses']}}</i></div>
+      </div>
+    {% endfor %}
+  </div>
+{% endfor %}
+    
 <hr/>
 <h5 class="text-center">Learn about the other DISC types</h5>
 <div id="gt-descriptions">
   <div class="row mx-2">
-    {% for key in type_details %}
+    {% for property in disc_properties %}
       <div class="col-sm-3 text-center">
-        <button class="btn mx-auto py-3 w-75 gt-type-descriptions collapsed" type="button" data-toggle="collapse" data-target="#{{key}}-descriptions" aria-expanded="false" aria-controls="#{{key}}-descriptions">
-          <h1 class="gt-card-title">{{key[0]}}</h1>
-          <div>{{key}}</div>
+        <button class="btn mx-auto py-3 w-75 gt-type-descriptions collapsed" type="button" data-toggle="collapse" data-target="#{{property}}-descriptions" aria-expanded="false" aria-controls="#{{property}}-descriptions">
+          <h1 class="gt-card-title">{{property[0]}}</h1>
+          <div>{{property}}</div>
         </button>
       </div>
     {% endfor %}
   </div>
  
-  {% for key in type_details %}
-    <div class="collapse mx-3 mt-3 py-4 px-3 gt-descriptions-content" id="{{key}}-descriptions" data-parent="#gt-descriptions">
-      <h3 class="text-center gt-page-header">{{key}}</h3>
+  {% for property in disc_properties %}
+    <div class="collapse mx-3 mt-3 py-4 px-3 gt-descriptions-content" id="{{property}}-descriptions" data-parent="#gt-descriptions">
+      <h3 class="text-center gt-page-header">{{property}}</h3>
       <!-- Primary Category -->
-      <h1 class="float-left text-center gt-complete-result-header">{{key[0]}}</h1>
-      <div>{{type_details[key]['description']}}</div>
+      <h1 class="float-left text-center gt-complete-result-header">{{property[0]}}</h1>
+      <div>{{disc_properties[property]['description']}}</div>
       <!-- Combo Categories -->
-      {% for subkey in type_details if subkey != key %}
+      {% for subproperty in disc_properties if subproperty != property %}
         <div class="ml-5 mt-3 gt-complete-secondary-category">
-          <h3 class="float-left text-center mb-0 gt-complete-result-header">{{key[0]}}/{{subkey[0]}}</h3>
-          <div>{{type_details[key][subkey]['description']}}</div>
-          <div><i>{{type_details[key][subkey]['verses']}}</i></div>
+          <h3 class="float-left text-center mb-0 gt-complete-result-header">{{property[0]}}/{{subproperty[0]}}</h3>
+          <div>{{disc_properties[property][subproperty]['description']}}</div>
+          <div><i>{{disc_properties[property][subproperty]['verses']}}</i></div>
         </div>
       {% endfor %}
     </div>

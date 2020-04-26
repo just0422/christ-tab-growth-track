@@ -3,15 +3,16 @@
 
 <h2 class="text-center gt-page-header">Spiritual Gifts Assessment Results</h2>
 
-{% for key in max_types %}
+<hr />
+{% for key in max_categories %}
   <div class="row">
     <div class="col-sm-2">
       <h1 class="gt-result-side-icon text-center">{{ key[0] }}</h1>
     </div>
     <div class="col-sm-10">
-      <div><span class="gt-result-title">{{ key }}</span>  (Your Score: {{type_values[key]}})</div>
-      <div>{{ type_details[key]['description'] }}</div>
-      <div><i>{{ type_details[key]['verses'] }}</i></div>
+      <div><span class="gt-result-title">{{ key }}</span>  (Your Score: {{sga_results[key]['value']}})</div>
+      <div>{{ sga_properties[key]['description'] }}</div>
+      <div><i>{{ sga_properties[key]['verses'] }}</i></div>
     </div>
   </div>
   <hr />
@@ -24,16 +25,16 @@
 </div>
 
 <div id="remaining-spiritual-gifts" class="collapse">
-  {% for key in type_values if key not in max_types %}
+  {% for key in sga_results if key not in max_categories %}
     <hr />
     <div class="row">
       <div class="col-sm-2">
         <h1 class="gt-result-side-icon text-center">{{ key[0] }}</h1>
       </div>
       <div class="col-sm-10">
-        <div><span class="gt-result-title">{{ key }}</span>  (Your Score: {{type_values[key]}})</div>
-        <div>{{ type_details[key]['description'] }}</div>
-        <div><i>{{ type_details[key]['verses'] }}</i></div>
+        <div><span class="gt-result-title">{{ key }}</span>  (Your Score: {{sga_results[key]['value']}})</div>
+        <div>{{ sga_properties[key]['description'] }}</div>
+        <div><i>{{ sga_properties[key]['verses'] }}</i></div>
       </div>
     </div>
   {% endfor %}

@@ -38,9 +38,9 @@
     <div class="px-5">
       {% for question_index in range(3) %}
         {% set question_index_count = loop.index - 1 %}
-        {% for type_key in type_details %}
+        {% for type_key in sga_properties %}
           {% set type_key_index_count = loop.index - 1 %}
-          {% if (question_index_count * type_details.keys()|length + type_key_index_count) % table_size == 0 %}
+          {% if (question_index_count * sga_properties.keys()|length + type_key_index_count) % table_size == 0 %}
             <table class="mt-1 table table-striped">
               <thead>
                 <tr>
@@ -54,7 +54,7 @@
           {% endif %}
                 <tr class="gt-form-question-row">
                   <th class="gt-form-question">
-                    {{type_details[type_key]['questions'][question_index]}}
+                    {{sga_properties[type_key]['questions'][question_index]}}
                     <div id="{{type_key}}-{{question_index}}-invalid-feedback" class="invalid-feedback">
                       Please choose what best fits you
                     </div>
@@ -66,8 +66,8 @@
                     </td>
                   {% endfor %}
                 </tr>
-          {% set current_index = question_index_count * type_details.keys()|length + type_key_index_count %}
-          {% if current_index % table_size == table_size - 1 or current_index == type_details.keys()|length * 3 - 1  %}
+          {% set current_index = question_index_count * sga_properties.keys()|length + type_key_index_count %}
+          {% if current_index % table_size == table_size - 1 or current_index == sga_properties.keys()|length * 3 - 1  %}
               </tbody>
             </table>
           {% endif %}
@@ -78,9 +78,9 @@
 
   <div class="gt-form-buttons d-block d-md-none">
     {% for question_index in range(3) %}
-      {% for type_key in type_details %}
+      {% for type_key in sga_properties %}
         <div class="text-center my-2 py-3 gt-form-buttons-question-group"> 
-          <div class="gt-form-question">{{type_details[type_key]['questions'][question_index]}}</div>
+          <div class="gt-form-question">{{sga_properties[type_key]['questions'][question_index]}}</div>
 
           <div class="d-flex justify-content-around">
             {% for choice in range(choices|length) %}
