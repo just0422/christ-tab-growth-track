@@ -34,7 +34,7 @@
   </div>
 
   <div class="gt-form-table d-none d-md-block">
-    {% for type in type_details %}
+    {% for type in disc_properties %}
       <hr />
       <div class="px-5">
         <table class="table table-striped">
@@ -47,10 +47,10 @@
             </tr>
           </thead>
           <tbody>
-            {% for index in range(type_details[type]['questions']|length) %}
+            {% for index in range(disc_properties[type]['questions']|length) %}
               <tr class="gt-form-question-row">
                 <th class="gt-form-question">
-                  {{type_details[type]['questions'][index]}}
+                  {{disc_properties[type]['questions'][index]}}
                   <div id="{{type}}-{{index}}-invalid-feedback" class="invalid-feedback">
                     Please choose what best fits you
                   </div>
@@ -71,10 +71,10 @@
 
   <div class="gt-form-buttons d-block d-md-none">
     <hr />
-    {% for type in type_details %}
-      {% for index in range(type_details[type]['questions']|length) %}
+    {% for type in disc_properties %}
+      {% for index in range(disc_properties[type]['questions']|length) %}
         <div class="text-center my-2 py-3 gt-form-buttons-question-group"> 
-          <div class="gt-form-question">{{type_details[type]['questions'][index]}}</div>
+          <div class="gt-form-question">{{disc_properties[type]['questions'][index]}}</div>
           
           <div class="d-flex justify-content-around">
             {% for choice in range(choices|length) %}
