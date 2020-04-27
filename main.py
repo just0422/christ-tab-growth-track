@@ -41,8 +41,7 @@ def disc_submit():
         max_category_value = disc_results[max_categories[0]]['value'] - 1
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
-    message = build_message(disc_results)
-    channel.basic_publish(exchange='pco_message', routing_key='pco_disc', body=json.dumps(message))
+    send_message(disc_results, 'pco_message', 'pco_disc')
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -64,8 +63,7 @@ def sga_submit():
     sga_results = assessment_results(constants.sga_properties)
     max_categories = filter_max_categories(constants.sga_properties, sga_results, 3, 9)
 
-    message = build_message(sga_results)
-    channel.basic_publish(exchange='pco_message', routing_key='pco_sga', body=json.dumps(message))
+    send_message(sga_results, 'pco_message', 'pco_sga')
    
     return render_template("sga_complete.html", 
         sga_properties=constants.sga_properties,
@@ -73,13 +71,20 @@ def sga_submit():
         max_categories=max_categories
     )
 
-def build_message(results):
-    return {
+def send_message(results, exchange, routing_key):
+    base_message = {
         'first_name': request.form.get('firstName'),
         'last_name': request.form.get('lastName'),
-        'email': request.form.get('emailAddress'),
-        'results': results
+        'email': request.form.get('emailAddress')
     }
+
+    for prop, results in results.items():
+        message = base_message.copy()
+        message['property'] = prop
+        message['id'] = results['id']
+        message['value'] = results['value']
+
+        channel.basic_publish(exchange='pco_message', routing_key='pco_sga', body=json.dumps(message))
 
 def assessment_results(properties):
     results = {}
