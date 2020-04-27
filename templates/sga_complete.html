@@ -5,7 +5,7 @@
 
 <hr />
 {% for key in max_categories %}
-  <div class="row">
+  <div class="row mx-2">
     <div class="col-sm-2">
       <h1 class="gt-result-side-icon text-center">{{ key[0] }}</h1>
     </div>
@@ -18,7 +18,7 @@
   <hr />
 {% endfor %}
 
-<div class="row justify-content-center">
+<div class="row mx-0 justify-content-center">
   <div class="col-md-6 col-xs-9">
     <button class="btn btn-dark w-100 gt-learn-more-button" data-toggle="collapse" data-target="#remaining-spiritual-gifts">Learn about other spiritual gifts</button>
   </div>
@@ -27,7 +27,7 @@
 <div id="remaining-spiritual-gifts" class="collapse">
   {% for key in sga_results if key not in max_categories %}
     <hr />
-    <div class="row">
+    <div class="row mx-2">
       <div class="col-sm-2">
         <h1 class="gt-result-side-icon text-center">{{ key[0] }}</h1>
       </div>

@@ -41,7 +41,7 @@ def disc_submit():
         max_category_value = disc_results[max_categories[0]]['value'] - 1
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
-    send_message(disc_results, 'pco_message', 'pco_disc')
+    # send_message(disc_results, 'pco_message', 'pco_disc')
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -84,7 +84,7 @@ def send_message(results, exchange, routing_key):
         message['id'] = results['id']
         message['value'] = results['value']
 
-        channel.basic_publish(exchange='pco_message', routing_key='pco_sga', body=json.dumps(message))
+        channel.basic_publish(exchange='pco_message', routing_key=routing_key, body=json.dumps(message))
 
 def assessment_results(properties):
     results = {}
