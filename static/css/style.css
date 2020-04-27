@@ -158,6 +158,22 @@ h1, h2 {
   border: 2px solid black;
 }
 
+.gt-accordion-item {
+  border: 2px solid black;
+}
+
+.gt-accordion-header {
+  cursor: pointer;
+}
+
+.gt-accordion-header:hover {
+  background-color: #c0c0c0;
+}
+
+.gt-accordion-content {
+  border-top: 1px dotted black
+}
+
 .gt-result-side-icon {
   font-size: 80px;
 }

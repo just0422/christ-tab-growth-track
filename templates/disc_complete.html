@@ -2,9 +2,9 @@
 {% block content %}
 
 <h2 class="text-center gt-page-header">DISC Assessment Results</h2>
-<div class="row">
+<div class="row mx-0">
   {% for property, result in disc_results.items() %}
-    <div class="col-sm-3 text-center">
+    <div class="col-6 col-md-3 text-center">
       <div>{{property}}</div>
       <div class="gt-assessment-result">{{result['value']}}</div>
     </div>
@@ -35,7 +35,7 @@
     
 <hr/>
 <h5 class="text-center">Learn about the other DISC types</h5>
-<div id="gt-descriptions">
+<div id="gt-descriptions" class="d-none d-md-block">
   <div class="row mx-2">
     {% for property in disc_properties %}
       <div class="col-sm-3 text-center">
@@ -61,6 +61,30 @@
           <div><i>{{disc_properties[property][subproperty]['verses']}}</i></div>
         </div>
       {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+<div class="accordion d-block d-md-none mx-4" id="gt-descriptions-accordion">
+  {% for property in disc_properties %}
+    <div class="gt-accordion-item my-1">
+      <div class="text-center py-3 gt-accordion-header" id="{{property}}-description-heading" data-toggle="collapse" data-target="#{{property}}-description-collapse" aria-expanded="true" aria-controls="{{property}}-description-collapse">
+        <h4 class="mb-0"><span class="gt-card-title">{{property[0]}}</span> - {{property}}</h4>
+      </div>
+
+      <div id="{{property}}-description-collapse" class="collapse py-2 gt-accordion-content" aria-labelledby="{{property}}-description-heading" data-parent="#gt-descriptions-accordion">
+        <div class="px-3">
+          <div>{{disc_properties[property]['description']}}</div>
+          <!-- Combo Categories -->
+          {% for subproperty in disc_properties if subproperty != property %}
+            <div class="ml-4 mt-3 gt-complete-secondary-category">
+              <h3 class="float-left text-center mb-0 gt-complete-result-header">{{property[0]}}/{{subproperty[0]}}</h3>
+              <div>{{disc_properties[property][subproperty]['description']}}</div>
+              <div><i>{{disc_properties[property][subproperty]['verses']}}</i></div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   {% endfor %}
 </div>
