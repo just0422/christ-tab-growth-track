@@ -1,0 +1,8 @@
+{% extends "mail_template.html" %}
+{% block content %}
+<div>
+{% for property, result in results['results'].items() %}
+  <div style="font-size: 22px">{{property}} - {{ result['value'] }}</div>
+{% endfor %}
+</div>
+{% endblock %}

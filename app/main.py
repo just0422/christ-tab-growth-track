@@ -1,13 +1,13 @@
-from flask import Flask, render_template, request
+from flask import render_template, request
 import json
 import pika
 import threading
 import sys
 
-import pco
-import constants
-
-app = Flask(__name__)
+from app import app
+from . import constants
+from . import gt_email
+from . import pco
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
@@ -17,8 +17,10 @@ channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_disc')
 channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_sga')
 
 pco_thread = threading.Thread(target=pco.start_rabbit_consumer, daemon=True)
-pco_thread.start()
+email_thread = threading.Thread(target=gt_email.start_rabbit_consumer, daemon=True)
 
+pco_thread.start()
+email_thread.start()
 
 @app.route("/disc")
 def disc():
@@ -42,6 +44,7 @@ def disc_submit():
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
     # send_message(disc_results, 'pco_message', 'pco_disc')
+    send_email(disc_results, 'DISC', 'sga', max_categories, max_sub_categories)
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -63,7 +66,8 @@ def sga_submit():
     sga_results = assessment_results(constants.sga_properties)
     max_categories = filter_max_categories(constants.sga_properties, sga_results, 3, 9)
 
-    send_message(sga_results, 'pco_message', 'pco_sga')
+    # send_message(sga_results, 'pco_message', 'pco_sga')
+    send_email(disc_results, 'Spiritual Gift', 'sga')
    
     return render_template("sga_complete.html", 
         sga_properties=constants.sga_properties,
@@ -85,6 +89,19 @@ def send_message(results, exchange, routing_key):
         message['value'] = results['value']
 
         channel.basic_publish(exchange='pco_message', routing_key=routing_key, body=json.dumps(message))
+
+def send_email(results, subject, routing_key, max_categories, max_sub_categories):
+    message = {
+        'first_name': request.form.get('firstName'),
+        'last_name': request.form.get('lastName'), 
+        'email': request.form.get('emailAddress'),
+        'subject': f"Your {subject} Assessment results",
+        'results': results,
+        'max_categories': max_categories,
+        'max_sub_categories': max_sub_categories
+    }
+
+    channel.basic_publish(exchange='email_message', routing_key=f"email_{routing_key}", body=json.dumps(message))
 
 def assessment_results(properties):
     results = {}
@@ -111,5 +128,3 @@ def filter_max_categories(properties, results, max_categories_count, max_categor
     return max_categories
 
 
-if __name__ == "__main__":
-    app.run(debug=True)

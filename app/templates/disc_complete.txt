@@ -1,0 +1,10 @@
+Hello {{results['first_name']}},
+
+Here are your DISC assessment results!
+
+{% for property, result in results['results'].items() %}
+{{ property }} - {{ result['value'] }}
+{% endfor %}
+
+Thank you,
+Saints Church!
