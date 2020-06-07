@@ -22,6 +22,10 @@ email_thread = threading.Thread(target=gt_email.start_rabbit_consumer, daemon=Tr
 pco_thread.start()
 email_thread.start()
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return 'This route does not exist {}'.format(request.url), 404
+
 @app.route("/disc")
 def disc():
     choices = ["Never", "Rarely", "Sometimes", "Often", "Always"]
