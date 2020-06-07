@@ -9,12 +9,20 @@ from . import constants
 from . import gt_email
 from . import pco
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+credentials = pika.PlainCredentials('guest', 'guest')
+params = pika.ConnectionParameters('localhost', credentials=credentials, heartbeat=50)
+connection = pika.BlockingConnection(params)
 channel = connection.channel()
 channel.queue_declare(queue='pco')
+channel.queue_declare(queue='email')
 channel.exchange_declare(exchange='pco_message', exchange_type='direct')
+channel.exchange_declare(exchange='email_message', exchange_type='direct')
 channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_disc')
 channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_sga')
+channel.queue_bind(exchange='email_message', queue='email', routing_key='email_disc')
+channel.queue_bind(exchange='email_message', queue='email', routing_key='email_sga')
+channel.close()
+connection.close()
 
 pco_thread = threading.Thread(target=pco.start_rabbit_consumer, daemon=True)
 email_thread = threading.Thread(target=gt_email.start_rabbit_consumer, daemon=True)
@@ -47,7 +55,7 @@ def disc_submit():
         max_category_value = disc_results[max_categories[0]]['value'] - 1
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
-    # send_message(disc_results, 'pco_message', 'pco_disc')
+    send_message(disc_results, 'pco_message', 'pco_disc')
     send_email(disc_results, 'DISC', 'sga', max_categories, max_sub_categories)
 
     return render_template("disc_complete.html", 
@@ -70,7 +78,7 @@ def sga_submit():
     sga_results = assessment_results(constants.sga_properties)
     max_categories = filter_max_categories(constants.sga_properties, sga_results, 3, 9)
 
-    # send_message(sga_results, 'pco_message', 'pco_sga')
+    send_message(sga_results, 'pco_message', 'pco_sga')
     send_email(disc_results, 'Spiritual Gift', 'sga')
    
     return render_template("sga_complete.html", 
@@ -80,6 +88,8 @@ def sga_submit():
     )
 
 def send_message(results, exchange, routing_key):
+    connection = pika.BlockingConnection(params)
+    channel = connection.channel()
     base_message = {
         'first_name': request.form.get('firstName'),
         'last_name': request.form.get('lastName'),
@@ -93,8 +103,13 @@ def send_message(results, exchange, routing_key):
         message['value'] = results['value']
 
         channel.basic_publish(exchange='pco_message', routing_key=routing_key, body=json.dumps(message))
+    channel.close()
+    connection.close()
 
 def send_email(results, subject, routing_key, max_categories, max_sub_categories):
+    connection = pika.BlockingConnection(params)
+    channel = connection.channel()
+
     message = {
         'first_name': request.form.get('firstName'),
         'last_name': request.form.get('lastName'), 
@@ -106,6 +121,8 @@ def send_email(results, subject, routing_key, max_categories, max_sub_categories
     }
 
     channel.basic_publish(exchange='email_message', routing_key=f"email_{routing_key}", body=json.dumps(message))
+    channel.close()
+    connection.close()
 
 def assessment_results(properties):
     results = {}

@@ -41,7 +41,7 @@ def handle_pco_person(ch, method, properties, body):
     send_field_data(person_id, field_data_id, results)
     request_count += 1
 
-    time.sleep(0.05 * request_count)
+    connection.sleep(0.05 * request_count)
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
 def find_person(first_name, last_name, email):

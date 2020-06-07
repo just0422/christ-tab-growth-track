@@ -6,7 +6,9 @@ import pika
 from app import app, mail
 from . import constants
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+credentials = pika.PlainCredentials('guest', 'guest')
+params = pika.ConnectionParameters('localhost', credentials=credentials, heartbeat=50)
+connection = pika.BlockingConnection(params)
 channel = connection.channel()
 
 def start_rabbit_consumer():
