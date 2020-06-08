@@ -7,11 +7,13 @@
       }
     </style>
   </head>
-  <body style="display: block; width: 90%; margin: 0 auto;">
+  <body style="display: block;">
     <div>
       <img src="{{ url_for('static', filename='images/saints_church.jpg') }}">
     </div>
-    {% block content %}
-    {% endblock %}
+    <div style="width: 90%; margin: 0 auto;">
+      {% block content %}
+      {% endblock %}
+    </div>
   </body>
 </html>

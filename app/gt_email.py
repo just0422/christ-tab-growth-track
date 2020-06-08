@@ -28,11 +28,10 @@ def handle_email(ch, method, properties, body):
             subject = results['subject']
             max_categories = results['max_categories']
             max_sub_categories = results['max_sub_categories']
-            test_taken = method.routing_key.split('_')[1]
 
             message = Message(subject=subject, recipients=recipients)
             
-            if test_taken == 'disc':
+            if 'disc' in method.routing_key:
                 message.body = render_template("disc_complete.txt", 
                     results=results,
                     max_categories=max_categories,
@@ -46,7 +45,7 @@ def handle_email(ch, method, properties, body):
                     max_sub_categories=max_sub_categories,
                     disc_properties=constants.disc_properties
                 )
-            else:
+            if 'sga' in method.routing_key:
                 message.body = render_template("sga_complete.txt", 
                     results=results,
                     max_categories=max_categories,
@@ -58,12 +57,7 @@ def handle_email(ch, method, properties, body):
                     max_categories=max_categories,
                     sga_properties=constants.sga_properties
                 )
-            """
-            with open("sample.txt", "w") as txt:
-                txt.write(message.body)
-            with open("sample.html", "w") as html:
-                html.write(message.html)
-            """           
+
             mail.send(message)
         finally:
             ch.basic_ack(delivery_tag = method.delivery_tag)

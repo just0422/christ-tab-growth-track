@@ -80,7 +80,7 @@ disc_properties = {
             'verses': 'Miriam (Exodus 15-21, Numbers 12:1-15), Ezra (Ezra 7, 8)'
         },
         'Steadiness': {
-            'description': 'We are systematic and stable. We tend to do one thing at a time— and do it right. Reserved and cautious, we would rather work behind the scenes to stay on track; however, we seldom take risks or try new things and naturally dislike sudden changes in our environments. Precisionists to the letter, we painstakingly require accuracy and fear criticism, which we equate to failure. Diligent workers, our motivation comes from serving others.',
+            'description': 'We are systematic and stable. We tend to do one thing at a time — and do it right. Reserved and cautious, we would rather work behind the scenes to stay on track; however, we seldom take risks or try new things and naturally dislike sudden changes in our environments. Precisionists to the letter, we painstakingly require accuracy and fear criticism, which we equate to failure. Diligent workers, our motivation comes from serving others.',
             'verses': 'Esther (Esther 4), Zechariah (Luke 1), Joseph (Matthew 1:1-23)'
         },
         'questions': [

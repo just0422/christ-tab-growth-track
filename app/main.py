@@ -55,8 +55,8 @@ def disc_submit():
         max_category_value = disc_results[max_categories[0]]['value'] - 1
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
-    #send_message(disc_results, 'pco_message', 'pco_disc')
-    send_email(disc_results, 'DISC', 'sga', max_categories, max_sub_categories)
+    send_message(disc_results, 'pco_message', 'pco_disc')
+    send_email(disc_results, 'DISC', 'disc', max_categories, max_sub_categories)
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -78,7 +78,7 @@ def sga_submit():
     sga_results = assessment_results(constants.sga_properties)
     max_categories = filter_max_categories(constants.sga_properties, sga_results, 3, 9)
 
-    #send_message(sga_results, 'pco_message', 'pco_sga')
+    send_message(sga_results, 'pco_message', 'pco_sga')
     send_email(sga_results, 'Spiritual Gift', 'sga', max_categories)
    
     return render_template("sga_complete.html", 

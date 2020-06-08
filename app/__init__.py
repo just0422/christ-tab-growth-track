@@ -13,7 +13,7 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_DEFAULT_SENDER'] = 'sainstchurchnoreply@gmail.com'
 
-# app.config['SERVER_NAME'] = 'localhost:5000'
+app.config['SERVER_NAME'] = '206.189.177.49'
 
 # mail.init_app(app)
 mail = Mail(app)
