@@ -1,8 +1,31 @@
 {% extends "mail_template.html" %}
 {% block content %}
-<div>
-{% for property, result in results['results'].items() %}
-  <div style="font-size: 22px">{{property}} - {{ result['value'] }}</div>
-{% endfor %}
+<div sytle="font-family: Helvetica, Sans-Serif">
+  <div>
+    {% for property, result in results['results'].items() %}
+      <div style="font-size: 22px; width: 100%; text-align: center">
+        {{property}} - {{ result['value'] }}
+      </div>
+    {% endfor %}
+  </div>
+  <hr />
+  {% if max_categories|length > 1 or max_sub_categories|length > 1 %}
+    <div><i>Looks like you tied for multiple categories. Feel free to retake the test and answer as honestly as possible or take a read through these and see what you identify with</i></div>
+  {% endif %}
+
+  {% for max_category in max_categories %}
+    <h1 style="margin-bottom: 0">{{max_category}}</h1>
+    <div>{{disc_properties[max_category]['description']}}</div>
+
+    {% for max_sub_category in max_sub_categories if max_sub_category != max_category %}
+      <div style="margin-left: 10%;">
+        <h3 style="margin-bottom: 0">{{max_category[0]}} / {{max_sub_category}}</h3>
+        <div>{{disc_properties[max_category][max_sub_category]['description']}}</div>
+        <div><i>{{disc_properties[max_category][max_sub_category]['verses']}}</i></div>
+      </div>
+    {% endfor %}
+    <hr />
+  {% endfor %}
+  <div>Thank you for taking this assessment! We can't wait to see you next week!</div>
 </div>
 {% endblock %}

@@ -21,24 +21,49 @@ def start_rabbit_consumer():
 
 def handle_email(ch, method, properties, body):
     with app.app_context():
-        results = json.loads(body)
+        try: 
+            results = json.loads(body)
 
-        recipients = [results['email']]
-        subject = results['subject']
-        body = "RESULTS"
+            recipients = [results['email']]
+            subject = results['subject']
+            max_categories = results['max_categories']
+            max_sub_categories = results['max_sub_categories']
+            test_taken = method.routing_key.split('_')[1]
 
-        message = Message(subject=subject, recipients=recipients)
-        message.body = render_template("disc_complete.txt", 
-            results=results,
-            max_categories=max_categories,
-            max_sub_categories=max_sub_categories
-        )
-        message.html = render_template("disc_complete.mail.html", 
-            results=results,
-            properties=constants.disc_properties,
-            max_categories=max_categories,
-            max_sub_categories=max_sub_categories
-        )
-        
-        mail.send(message)
-        ch.basic_ack(delivery_tag = method.delivery_tag)
+            message = Message(subject=subject, recipients=recipients)
+            
+            if test_taken == 'disc':
+                message.body = render_template("disc_complete.txt", 
+                    results=results,
+                    max_categories=max_categories,
+                    max_sub_categories=max_sub_categories,
+                    disc_properties=constants.disc_properties 
+                )
+                message.html = render_template("disc_complete.mail.html", 
+                    results=results,
+                    properties=constants.disc_properties,
+                    max_categories=max_categories,
+                    max_sub_categories=max_sub_categories,
+                    disc_properties=constants.disc_properties
+                )
+            else:
+                message.body = render_template("sga_complete.txt", 
+                    results=results,
+                    max_categories=max_categories,
+                    sga_properties=constants.sga_properties 
+                )
+                message.html = render_template("sga_complete.mail.html", 
+                    results=results,
+                    properties=constants.sga_properties,
+                    max_categories=max_categories,
+                    sga_properties=constants.sga_properties
+                )
+            """
+            with open("sample.txt", "w") as txt:
+                txt.write(message.body)
+            with open("sample.html", "w") as html:
+                html.write(message.html)
+            """           
+            mail.send(message)
+        finally:
+            ch.basic_ack(delivery_tag = method.delivery_tag)

@@ -1,0 +1,24 @@
+{% extends "mail_template.html" %}
+{% block content %}
+
+<div sytle="font-family: Helvetica, Sans-Serif">
+  <div>
+    {% for key in max_categories %}
+      <h2 style-"margin-bottom: 0px;"><strong>{{ key }}</strong>  (Your Score: {{results['results'][key]['value']}})</h2>
+      <div>{{ sga_properties[key]['description'] }}</div>
+      <div><i>{{ sga_properties[key]['verses'] }}</i></div>
+    {% endfor %}
+  </div>
+  <hr />
+  <div>
+    {% for key in results['results'] if key not in max_categories %}
+      <h3 style="margin-bottom: 0px; margin-top: 15px"><strong>{{ key }}</strong>  (Your Score: {{results['results'][key]['value']}})</h3>
+      <div>{{ sga_properties[key]['description'] }}</div>
+      <div><i>{{ sga_properties[key]['verses'] }}</i></div>
+    {% endfor %}
+  </div>
+
+  <hr />
+  <div>Thank you for taking this assessment! We can't wait to see you next week!</div>
+</div>
+{% endblock %}

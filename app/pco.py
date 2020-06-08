@@ -22,27 +22,29 @@ def start_rabbit_consumer():
     channel.start_consuming()
 
 def handle_pco_person(ch, method, properties, body):
-    results = json.loads(body)
-    request_count = 0
+    try:
+        results = json.loads(body)
+        request_count = 0
 
-    # Find person
-    person_id = find_person(results['first_name'], results['last_name'], results['email'])
-    request_count += 1
-
-    if not person_id:
-        person_id = create_person(results['first_name'], results['last_name'], results['email'])
+        # Find person
+        person_id = find_person(results['first_name'], results['last_name'], results['email'])
         request_count += 1
 
-    # Gather Field Data
-    field_data_id = get_field_data(person_id, results["id"])
-    request_count += 1
+        if not person_id:
+            person_id = create_person(results['first_name'], results['last_name'], results['email'])
+            request_count += 1
 
-    # Send to PCO
-    send_field_data(person_id, field_data_id, results)
-    request_count += 1
+        # Gather Field Data
+        field_data_id = get_field_data(person_id, results["id"])
+        request_count += 1
 
-    connection.sleep(0.05 * request_count)
-    ch.basic_ack(delivery_tag = method.delivery_tag)
+        # Send to PCO
+        send_field_data(person_id, field_data_id, results)
+        request_count += 1
+
+        connection.sleep(0.05 * request_count)
+    finally:
+        ch.basic_ack(delivery_tag = method.delivery_tag)
 
 def find_person(first_name, last_name, email):
     # These go out with every request as a baseline for finding a person

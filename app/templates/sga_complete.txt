@@ -1,0 +1,26 @@
+Hello {{results['first_name']}},
+
+Here are your Spiritual Gift assessment results!
+
+These are the categories you scored highest in:
+{% for key in max_categories %}
+{{ key }} - (Your Score: {{results['results'][key]['value']}})
+===================================
+{{ sga_properties[key]['description'] }}
+{{ sga_properties[key]['verses'] }}
+{% endfor %}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+These are your remaining scores:
+{% for key in results['results'] if key not in max_categories %}
+{{ key }} - (Your Score: {{results['results'][key]['value']}})
+===================================
+{{ sga_properties[key]['description'] }}
+{{ sga_properties[key]['verses'] }}
+
+{% endfor %}
+/////////////////////////////////////////////////////////////////////////////////////
+
+Thank you for taking this assessment! We can't wait to see you next week,
+Saints Church

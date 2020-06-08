@@ -6,5 +6,25 @@ Here are your DISC assessment results!
 {{ property }} - {{ result['value'] }}
 {% endfor %}
 
-Thank you,
+{% if max_categories|length > 1 or max_sub_categories|length > 1 %}
+Looks like you tied for multiple categories. Feel free to retake the test and answer as honestly as possible or take a read through these and see what you identify with
+{% endif %}
+
+{% for max_category in max_categories %}
+{{max_category}}
+{{disc_properties[max_category]['verses']}}
+==============================
+{{disc_properties[max_category]['description']}}
+{% for max_sub_category in max_sub_categories if max_sub_category != max_category %}
+
+{{max_category[0]}} / {{max_sub_category}}
+------------------------------
+{{disc_properties[max_category][max_sub_category]['description']}}
+
+{{disc_properties[max_category][max_sub_category]['verses']}}
+{% endfor %}
+/////////////////////////////////////////////////////////////////////////////////////
+{% endfor %}
+
+Thank you for taking this assessment! We can't wait to see you next week,
 Saints Church!
