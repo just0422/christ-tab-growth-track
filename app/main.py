@@ -61,7 +61,7 @@ def disc_submit():
         max_sub_categories = filter_max_categories(constants.disc_properties, disc_results, 1, max_category_value)
     
     send_message(disc_results, 'pco_message', 'pco_disc')
-    send_email(disc_results, 'DISC', 'disc', max_categories, max_sub_categories)
+    #send_email(disc_results, 'DISC', 'disc', max_categories, max_sub_categories)
 
     return render_template("disc_complete.html", 
         disc_properties=constants.disc_properties,
@@ -95,26 +95,47 @@ def sga_submit():
 def send_message(results, exchange, routing_key):
     connection = pika.BlockingConnection(params)
     channel = connection.channel()
+
+    first_name = request.form.get('firstName')
+    last_name = request.form.get('lastName')
+    email = request.form.get('emailAddress')
+
     base_message = {
-        'first_name': request.form.get('firstName'),
-        'last_name': request.form.get('lastName'),
-        'email': request.form.get('emailAddress')
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email
     }
     
+    person_id = pco.find_person(first_name, last_name, email)
+    msg_body = None
+    if person_id:
+        msg_body = {
+            'type': 'info',
+            'message': f"pco.py ------- handle_pco_person -- Found Profile {first_name} {last_name} ({email}) -- ({person_id}) "
+        }
+    else:
+        person_id = pco.create_person(first_name, last_name, email)
+        msg_body = {
+            'type': 'info',
+            'message': f"pco.py ------- handle_pco_person -- Created Profile {first_name} {last_name} ({email}) -- ({person_id}) "
+        }
+    channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+
     msg_body = {
         'type': 'info',
-        'message': f"main.py ------ send_message ------- Sending {routing_key} messages for {request.form.get('firstName')} {request.form.get('lastName')} message"
+        'message': f"main.py ------ send_message ------- Sending {routing_key} messages for {first_name} {last_name} message"
     }
     channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
     for prop, results in results.items():
         message = base_message.copy()
+        message['person_id'] = person_id
         message['property'] = prop
         message['id'] = results['id']
         message['value'] = results['value']
 
         msg_body = {
             'type': 'info',
-            'message': f"main.py ------ send_message ------- Sending {request.form.get('firstName')} {request.form.get('lastName')} -- {message['property']} ({message['value']})"
+            'message': f"main.py ------ send_message ------- Sending {first_name} {last_name} -- {message['property']} ({message['value']})"
         }
         channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
         channel.basic_publish(exchange='pco_message', routing_key=routing_key, body=json.dumps(message))

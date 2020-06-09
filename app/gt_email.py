@@ -69,15 +69,15 @@ def handle_email(ch, method, properties, body):
 
             mail.send(message)
         except Exception as e:
-            msg_body = {
+            msg_body_1 = {
                 'error': 'error',
                 'message': f"gt_email.py -- handle_email ------- Error sending email to {results['first_name']} {results['last_name']} - {results['email']}"
             }
-            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
-            msg_body = {
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body_1))
+            msg_body_2 = {
                 'type': 'error',
                 'message': "gt_email.py -- handle_email ------- " + str(e)
             }
-            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body_2))
         finally:
             ch.basic_ack(delivery_tag = method.delivery_tag)

@@ -26,26 +26,8 @@ def handle_pco_person(ch, method, properties, body):
         results = json.loads(body)
         request_count = 0
 
-        # Find person
-        person_id = find_person(results['first_name'], results['last_name'], results['email'])
-        request_count += 1
-        
-        if person_id:
-            msg_body = {
-                'type': 'info',
-                'message': f"pco.py ------- handle_pco_person -- Updating Profile {results['first_name']} {results['last_name']} ({results['email']})"
-            }
-            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
-        else:
-            msg_body = {
-                'type': 'info',
-                'message': f"pco.py ------- handle_pco_person -- Creating Profile {results['first_name']} {results['last_name']} ({results['email']})"
-            }
-            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
-            person_id = create_person(results['first_name'], results['last_name'], results['email'])
-            request_count += 1
-
         # Gather Field Data
+        person_id = results['person_id']
         field_data_id = get_field_data(person_id, results["id"])
         request_count += 1
 
@@ -61,16 +43,16 @@ def handle_pco_person(ch, method, properties, body):
 
         connection.sleep(0.05 * request_count)
     except Exception as e:
-        msg_body = {
+        msg_body_1 = {
             'error': 'error',
             'message': f"pco.py ------- handle_pco_person -- Error sending {results['first_name']} {results['last_name']} - {results['property']} -> {results['value']}"
         }
-        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
-        msg_body = {
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body_1))
+        msg_body_2 = {
             'type': 'error',
             'message': "pco.py ------- handle_pco_person -- " + str(e)
         }
-        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body_2))
     finally:
         ch.basic_ack(delivery_tag = method.delivery_tag)
 
