@@ -2,6 +2,7 @@ import json
 import os
 import pika
 import pypco
+import time
 
 pco = pypco.PCO(
     os.environ["PCO_KEY"],
@@ -110,7 +111,7 @@ def create_person(first_name, last_name, email):
     payload = pco.template('Person', template)
     person = pco.post('/people/v2/people', payload)
 
-    id = person['data']['id']
+    person_id = person['data']['id']
 
     template = {
         'address': email,
@@ -118,7 +119,9 @@ def create_person(first_name, last_name, email):
     }
     payload = pco.template("Email", template)
     
-    pco.post(f'/people/v2/people/{id}/emails', payload)
+    pco.post(f'/people/v2/people/{person_id}/emails', payload)
+
+    return person_id
 
 def get_field_data(person_id, property_id):
     for field in pco.iterate(f"/people/v2/people/{person_id}/field_data?include=field_definition"):

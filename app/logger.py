@@ -16,8 +16,9 @@ def start_logger_consumer():
 def handle_logger(ch, method, properties, body):
     log = json.loads(body)
     try:
-        with open("output.log", "a") as logger:
-            now = datetime.datetime.now()
-            logger.write(f"{now} - {log['type'].upper()} ----- {log['message']}\n")
+        if 'type' in log and 'message' in log:
+            with open("output.log", "a") as logger:
+                now = datetime.datetime.now()
+                logger.write(f"{now} - {log['type'].upper()} ----- {log['message']}\n")
     finally:
         ch.basic_ack(delivery_tag = method.delivery_tag)
