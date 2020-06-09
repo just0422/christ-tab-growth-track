@@ -6,8 +6,7 @@ import pika
 from app import app, mail
 from . import constants
 
-credentials = pika.PlainCredentials('guest', 'guest')
-params = pika.ConnectionParameters('localhost', credentials=credentials, heartbeat=50)
+params = pika.ConnectionParameters('localhost')
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
 
@@ -32,6 +31,11 @@ def handle_email(ch, method, properties, body):
             message = Message(subject=subject, recipients=recipients)
             
             if 'disc' in method.routing_key:
+                msg_body = {
+                    'type': 'info',
+                    'message': f"gt_email.py -- handle_email ------- Sending DISC results to {results['first_name']} {results['last_name']} ({results['email']})"
+                }
+                channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
                 message.body = render_template("disc_complete.txt", 
                     results=results,
                     max_categories=max_categories,
@@ -46,6 +50,11 @@ def handle_email(ch, method, properties, body):
                     disc_properties=constants.disc_properties
                 )
             if 'sga' in method.routing_key:
+                msg_body = {
+                    'type': 'info',
+                    'message': f"gt_email.py -- handle_email ------- Sending SGA results to {results['first_name']} {results['last_name']} ({results['email']})"
+                }
+                channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
                 message.body = render_template("sga_complete.txt", 
                     results=results,
                     max_categories=max_categories,
@@ -59,5 +68,16 @@ def handle_email(ch, method, properties, body):
                 )
 
             mail.send(message)
+        except Exception as e:
+            msg_body = {
+                'error': 'error',
+                'message': f"gt_email.py -- handle_email ------- Error sending email to {results['first_name']} {results['last_name']} - {results['email']}"
+            }
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+            msg_body = {
+                'type': 'error',
+                'message': "gt_email.py -- handle_email ------- " + str(e)
+            }
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
         finally:
             ch.basic_ack(delivery_tag = method.delivery_tag)

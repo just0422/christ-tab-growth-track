@@ -2,7 +2,6 @@ import json
 import os
 import pika
 import pypco
-import time
 
 pco = pypco.PCO(
     os.environ["PCO_KEY"],
@@ -29,8 +28,19 @@ def handle_pco_person(ch, method, properties, body):
         # Find person
         person_id = find_person(results['first_name'], results['last_name'], results['email'])
         request_count += 1
-
-        if not person_id:
+        
+        if person_id:
+            msg_body = {
+                'type': 'info',
+                'message': f"pco.py ------- handle_pco_person -- Updating Profile {results['first_name']} {results['last_name']} ({results['email']})"
+            }
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+        else:
+            msg_body = {
+                'type': 'info',
+                'message': f"pco.py ------- handle_pco_person -- Creating Profile {results['first_name']} {results['last_name']} ({results['email']})"
+            }
+            channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
             person_id = create_person(results['first_name'], results['last_name'], results['email'])
             request_count += 1
 
@@ -42,7 +52,24 @@ def handle_pco_person(ch, method, properties, body):
         send_field_data(person_id, field_data_id, results)
         request_count += 1
 
+        msg_body = {
+            'type': 'info',
+            'message': f"pco.py ------- handle_pco_person -- Sending {results['first_name']} {results['last_name']} - {results['property']} -> {results['value']}"
+        }
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+
         connection.sleep(0.05 * request_count)
+    except Exception as e:
+        msg_body = {
+            'error': 'error',
+            'message': f"pco.py ------- handle_pco_person -- Error sending {results['first_name']} {results['last_name']} - {results['property']} -> {results['value']}"
+        }
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
+        msg_body = {
+            'type': 'error',
+            'message': "pco.py ------- handle_pco_person -- " + str(e)
+        }
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
     finally:
         ch.basic_ack(delivery_tag = method.delivery_tag)
 

@@ -7,28 +7,33 @@ import sys
 from app import app
 from . import constants
 from . import gt_email
+from . import logger
 from . import pco
 
-credentials = pika.PlainCredentials('guest', 'guest')
-params = pika.ConnectionParameters('localhost', credentials=credentials, heartbeat=50)
+params = pika.ConnectionParameters('localhost')
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
 channel.queue_declare(queue='pco')
 channel.queue_declare(queue='email')
+channel.queue_declare(queue='logger')
 channel.exchange_declare(exchange='pco_message', exchange_type='direct')
 channel.exchange_declare(exchange='email_message', exchange_type='direct')
+channel.exchange_declare(exchange='logger_message', exchange_type='direct')
 channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_disc')
 channel.queue_bind(exchange='pco_message', queue='pco', routing_key='pco_sga')
 channel.queue_bind(exchange='email_message', queue='email', routing_key='email_disc')
 channel.queue_bind(exchange='email_message', queue='email', routing_key='email_sga')
+channel.queue_bind(exchange='logger_message', queue='logger', routing_key='logger')
 channel.close()
 connection.close()
 
 pco_thread = threading.Thread(target=pco.start_rabbit_consumer, daemon=True)
 email_thread = threading.Thread(target=gt_email.start_rabbit_consumer, daemon=True)
+logging_thread = threading.Thread(target=logger.start_logger_consumer, daemon=True)
 
 pco_thread.start()
 email_thread.start()
+logging_thread.start()
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -95,13 +100,23 @@ def send_message(results, exchange, routing_key):
         'last_name': request.form.get('lastName'),
         'email': request.form.get('emailAddress')
     }
-
+    
+    msg_body = {
+        'type': 'info',
+        'message': f"main.py ------ send_message ------- Sending {routing_key} messages for {request.form.get('firstName')} {request.form.get('lastName')} message"
+    }
+    channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
     for prop, results in results.items():
         message = base_message.copy()
         message['property'] = prop
         message['id'] = results['id']
         message['value'] = results['value']
 
+        msg_body = {
+            'type': 'info',
+            'message': f"main.py ------ send_message ------- Sending {request.form.get('firstName')} {request.form.get('lastName')} -- {message['property']} ({message['value']})"
+        }
+        channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
         channel.basic_publish(exchange='pco_message', routing_key=routing_key, body=json.dumps(message))
     channel.close()
     connection.close()
@@ -120,6 +135,11 @@ def send_email(results, subject, routing_key, max_categories, max_sub_categories
         'max_sub_categories': max_sub_categories
     }
 
+    msg_body = {
+        'type': 'info',
+        'message': f"main.py ------ send_email --------- Sending {routing_key} message for {request.form.get('firstName')} {request.form.get('lastName')} Email"
+    }
+    channel.basic_publish(exchange='logger_message', routing_key='logger', body=json.dumps(msg_body))
     channel.basic_publish(exchange='email_message', routing_key=f"email_{routing_key}", body=json.dumps(message))
     channel.close()
     connection.close()
